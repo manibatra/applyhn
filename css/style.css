@@ -1,0 +1,42 @@
+#staggered-test > li {
+	opacity: 0;
+}
+
+.container {
+	width: 80%;
+	margin-top: 20px;
+}
+
+.sm12 {
+	margin: auto;
+	width: 100%;
+}
+
+.brand-logo {
+	margin-left: 20px;
+}
+
+.chip {
+	margin-right: 12px;
+}
+
+.pagination {
+	text-align: center;
+}
+
+.center-button {
+	text-align: center;
+}
+
+.preloader-wrapper {
+	margin: auto;
+	display: block;
+}
+
+@media screen and (max-width: 575px) {
+
+	.container {
+		width: 90%;
+	}
+
+}
