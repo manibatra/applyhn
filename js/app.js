@@ -6,12 +6,14 @@ var ratings = 0,
 
 var currentURL = "http://hn.algolia.com/api/v1/search_by_date?";
 
+
 $("#ratings, #ratings_drop").on('click', function() {
     ratings = 1;
     date = 0;
     $('.btn').removeClass("z-depth-4");
     $(this).addClass("z-depth-4");
     currentURL = "http://hn.algolia.com/api/v1/search?";
+    $('#ordering').text('By Ratings')
     $('.collapsible').children().remove();
     $(".preloader-wrapper").addClass('active');
     $.when(getContent('0', true)).done(function() {
@@ -25,6 +27,8 @@ $("#date, #date_drop").on('click', function() {
     date = 1;
     $('.btn').removeClass("z-depth-4");
     $(this).addClass("z-depth-4");
+    $('#ordering').text('By Date')
+
     currentURL = "http://hn.algolia.com/api/v1/search_by_date?";
     $('.collapsible').children().remove();
     $(".preloader-wrapper").addClass('active');
@@ -38,20 +42,40 @@ $("#date, #date_drop").on('click', function() {
 $("#random, #random_drop").on('click', function() {
     random = !random;
     $('.btn').removeClass("z-depth-4");
+
+    if (random) {
+        $('#ordering').text('Random');
+        date = 0;
+        Materialize.toast('Random ordering of pages turned on!', 4000);
+        $(this).addClass("z-depth-4");
+
+    } else {
+        $('#ordering').text('By Date');
+        date = 1;
+        $('#date').addClass("z-depth-4");
+        Materialize.toast('Random ordering of pages turned off!', 4000);
+        $(this).removeClass("z-depth-4");
+
+
+    }
+    currentURL = "http://hn.algolia.com/api/v1/search_by_date?";
     var currentPage = $('.pagination').find('.active');
     if (random) {
-        $('#random').text('Random Off');
-        $('#random').append('<i class="material-icons left">loop</i>');
-        $('#dropdown2 > li:nth-child(3) > a').text('Random Off');
-        $('#chat').addClass('disabled');
-        $('#dropdown2 > li:nth-child(4)').addClass('hide');
-    } else {
-        $('#random').text('Random On');
-        $('#random').append('<i class="material-icons left">loop</i>');
+        $('#chat').addClass('hide');
+        $('#ratings').addClass('hide');
+        $('#date').addClass('hide');
 
-        $('#dropdown2 > li:nth-child(3) > a').text('Random On');
-        $('#chat').removeClass('disabled');
+        $('#dropdown2 > li:nth-child(4)').addClass('hide');
+        $('#dropdown2 > li:nth-child(1)').addClass('hide');
+        $('#dropdown2 > li:nth-child(2)').addClass('hide');
+    } else {
+
+        $('#chat').removeClass('hide');
+        $('#ratings').removeClass('hide');
+        $('#date').removeClass('hide');
         $('#dropdown2 > li:nth-child(4)').removeClass('hide');
+        $('#dropdown2 > li:nth-child(1)').removeClass('hide');
+        $('#dropdown2 > li:nth-child(2)').removeClass('hide');
     }
     showPage(currentPage);
 });
@@ -124,9 +148,9 @@ var getContent = function(pageNo, loadPages) {
 $("#chat, #chat_drop").on('click', function() {
     chat = !chat;
     if (chat) {
-        $('#chat > i').text('trending_up');
-        $('#dropdown2 > li:nth-child(4) > a').text('Order group by ratings');
-        $('#chat').attr('data-tooltip', 'Order within current group by ratings');
+        $('#chat > i').text('settings_backup_restore');
+        $('#dropdown2 > li:nth-child(4) > a').text('Restore original order');
+        $('#chat').attr('data-tooltip', 'Restore original order');
     } else {
         $('#chat > i').text('chat_bubble_outline');
         $('#dropdown2 > li:nth-child(4) > a').text('Order group by comments');
@@ -154,11 +178,16 @@ $(document).on('click', '.pagination > .waves-effect, #dropdown1 > li', function
 
 $("#next_page").on('click', function() {
     var currentPage = $('.pagination').find('.active');
-    currentPage.removeClass('active');
-    currentPage.addClass('waves-effect');
-    var index = currentPage.index() + 1;
-    $('.pagination > li:nth-child(' + (index + 1) + ')').addClass('active');
-    showPage(currentPage.next());
+    var index = currentPage.index() - 1;
+    console.log(index + " " + pages);
+
+    if (index < pages - 1) {
+        currentPage.removeClass('active');
+        currentPage.addClass('waves-effect');
+        var index = currentPage.index() + 1;
+        $('.pagination > li:nth-child(' + (index + 1) + ')').addClass('active');
+        showPage(currentPage.next());
+    }
 
 });
 
@@ -174,11 +203,19 @@ $("#prev_page").on('click', function() {
 
 });
 
-
+var prevPageNo;
 var showPage = function(page) {
     $('.collapsible').children().remove();
     $(".preloader-wrapper").addClass('active');
     var pageNumber = (!random) ? (parseInt($(page).find('a').text()) - 1) : Math.floor(Math.random() * ((pages - 1) - 0 + 1) + 0);
+
+    if (random) {
+        date = 1;
+        while (prevPageNo === pageNumber) {
+            pageNumber = Math.floor(Math.random() * ((pages - 1) - 0 + 1) + 0);
+        }
+    }
+    prevPageNo = pageNumber;
     $.when(getContent(pageNumber, false)).done(function() {
         $(".preloader-wrapper").removeClass('active');
     });
