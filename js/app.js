@@ -1,5 +1,5 @@
 var ratings = 0,
-    date = 0,
+    date = 1,
     random = 0,
     chat = 0,
     pages = 0;
@@ -21,7 +21,7 @@ $("#ratings, #ratings_drop").on('click', function() {
 });
 
 $("#date, #date_drop").on('click', function() {
-    date = 1;
+    date = (date === 1) ? 0 : 1;
     $('.btn').removeClass("z-depth-4");
     $(this).addClass("z-depth-4");
     currentURL = "http://hn.algolia.com/api/v1/search_by_date?";
@@ -42,11 +42,15 @@ $("#random, #random_drop").on('click', function() {
         $('#random').text('Random Off');
         $('#random').append('<i class="material-icons left">loop</i>');
         $('#dropdown2 > li:nth-child(3) > a').text('Random Off');
+        $('#chat').addClass('disabled');
+        $('#dropdown2 > li:nth-child(4)').addClass('hide');
     } else {
         $('#random').text('Random On');
         $('#random').append('<i class="material-icons left">loop</i>');
 
         $('#dropdown2 > li:nth-child(3) > a').text('Random On');
+        $('#chat').removeClass('disabled');
+        $('#dropdown2 > li:nth-child(4)').removeClass('hide');
     }
     showPage(currentPage);
 });
@@ -104,7 +108,7 @@ var getContent = function(pageNo, loadPages) {
 
                 $('.collapsible').append('<li>\
                     <div class="collapsible-header"><i class="material-icons">whatshot</i>Nothing to see here</div>\
-                    <div class="collapsible-body"><p>Go back! Go back!</p></div>\
+                    <div class="collapsible-body"><p>Go on some other page!</p></div>\
                 </li>')
             }
 
