@@ -42,17 +42,20 @@ $("#date, #date_drop").on('click', function() {
 $("#random, #random_drop").on('click', function() {
     random = !random;
     $('.btn').removeClass("z-depth-4");
-    $(this).addClass("z-depth-4");
 
     if (random) {
         $('#ordering').text('Random');
         date = 0;
         Materialize.toast('Random ordering of pages turned on!', 4000);
+        $(this).addClass("z-depth-4");
+
     } else {
         $('#ordering').text('By Date');
         date = 1;
         $('#date').addClass("z-depth-4");
         Materialize.toast('Random ordering of pages turned off!', 4000);
+        $(this).removeClass("z-depth-4");
+
 
     }
     currentURL = "http://hn.algolia.com/api/v1/search_by_date?";
