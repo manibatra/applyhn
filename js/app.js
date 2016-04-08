@@ -8,6 +8,7 @@ var currentURL = "http://hn.algolia.com/api/v1/search_by_date?";
 
 $("#ratings, #ratings_drop").on('click', function() {
     ratings = 1;
+    date = 0;
     $('.btn').removeClass("z-depth-4");
     $(this).addClass("z-depth-4");
     currentURL = "http://hn.algolia.com/api/v1/search?";
@@ -21,7 +22,7 @@ $("#ratings, #ratings_drop").on('click', function() {
 });
 
 $("#date, #date_drop").on('click', function() {
-    date = (date === 1) ? 0 : 1;
+    date = 1;
     $('.btn').removeClass("z-depth-4");
     $(this).addClass("z-depth-4");
     currentURL = "http://hn.algolia.com/api/v1/search_by_date?";
