@@ -6,6 +6,7 @@ var ratings = 0,
 
 var currentURL = "http://hn.algolia.com/api/v1/search_by_date?";
 
+
 $("#ratings, #ratings_drop").on('click', function() {
     ratings = 1;
     date = 0;
@@ -41,30 +42,34 @@ $("#date, #date_drop").on('click', function() {
 $("#random, #random_drop").on('click', function() {
     random = !random;
     $('.btn').removeClass("z-depth-4");
-    (random) ? $('#ordering').text('Random') : $('#ordering').text('By Date');
-    date = (random) ? 0 : 1;
-    (random) ? 0 : $('#date').addClass("z-depth-4");
+    $(this).addClass("z-depth-4");
+
+    if (random) {
+        $('#ordering').text('Random');
+        date = 0;
+        Materialize.toast('Random ordering of pages turned on!', 4000);
+    } else {
+        $('#ordering').text('By Date');
+        date = 1;
+        $('#date').addClass("z-depth-4");
+        Materialize.toast('Random ordering of pages turned off!', 4000);
+
+    }
     currentURL = "http://hn.algolia.com/api/v1/search_by_date?";
     var currentPage = $('.pagination').find('.active');
     if (random) {
-        $('#chat').addClass('disabled');
-        $('#ratings').addClass('disabled');
-        $('#date').addClass('disabled');
-        $('#chat').prop('disabled', true);
-        $('#ratings').prop('disabled', true);
-        $('#date').prop('disabled', true);
+        $('#chat').addClass('hide');
+        $('#ratings').addClass('hide');
+        $('#date').addClass('hide');
 
         $('#dropdown2 > li:nth-child(4)').addClass('hide');
         $('#dropdown2 > li:nth-child(1)').addClass('hide');
         $('#dropdown2 > li:nth-child(2)').addClass('hide');
     } else {
 
-        $('#chat').removeClass('disabled');
-        $('#ratings').removeClass('disabled');
-        $('#date').removeClass('disabled');
-        $('#chat').prop('disabled', false);
-        $('#ratings').prop('disabled', false);
-        $('#date').prop('disabled', false);
+        $('#chat').removeClass('hide');
+        $('#ratings').removeClass('hide');
+        $('#date').removeClass('hide');
         $('#dropdown2 > li:nth-child(4)').removeClass('hide');
         $('#dropdown2 > li:nth-child(1)').removeClass('hide');
         $('#dropdown2 > li:nth-child(2)').removeClass('hide');
