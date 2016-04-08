@@ -33,6 +33,17 @@
 	display: block;
 }
 
+.uptop {
+	right: 0 !important;
+	font-size: 1.2rem !important;
+	line-height: 0 !important;
+	position: static !important;
+}
+
+span.badge.new:after {
+	content: " comment(s)";
+}
+
 @media screen and (max-width: 575px) {
 
 	.container {
