@@ -90,7 +90,7 @@ var getContent = function(pageNo, loadPages) {
         url: currentURL + "query=%22apply%20hn%22&tags=story&page=" + pageNo.toString() + "&hitsPerPage=15",
         success: function displayData(data) {
             if (loadPages === true) {
-                console.log(data);
+                //console.log(data);
                 pages = data['nbPages'];
                 var existing = $('.pagination').children().length;
                 if ((existing - 2) < pages) {
@@ -179,7 +179,7 @@ $(document).on('click', '.pagination > .waves-effect, #dropdown1 > li', function
 $("#next_page").on('click', function() {
     var currentPage = $('.pagination').find('.active');
     var index = currentPage.index() - 1;
-    console.log(index + " " + pages);
+    //console.log(index + " " + pages);
 
     if (index < pages - 1) {
         currentPage.removeClass('active');
