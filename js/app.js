@@ -138,7 +138,7 @@ var getContent = function(pageNo, loadPages) {
             }
 
         },
-        async: false
+        async: true
     });
 
 
