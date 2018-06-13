@@ -16,6 +16,6 @@ This project was hacked together to aggregate the posts submitted for the commun
 **Note** : The project is no longer active but the design skeleton can be found at **http://manibatra.github.io/applyhn/index.html**
 
 #### Mentions
-The project was picked up on Product Hunt and I ejoyed my 7 minutes of *fame*. 
+The project was picked up on Product Hunt and I enjoyed my 7 minutes of *fame*. 
 
 **Product Page** : https://www.producthunt.com/posts/apply-hn-aggregator
